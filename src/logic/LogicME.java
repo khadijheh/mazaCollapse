@@ -133,4 +133,9 @@ public static Set<Move> getPossibleMoves(State state) {
         }
         System.out.println("-------------------------------------------------");
     }
+    public static double calculateHeuristic(Position currentPos, Position goalPos) {
+        int dx = Math.abs(currentPos.getX() - goalPos.getX());
+        int dy = Math.abs(currentPos.getY() - goalPos.getY());
+        return (double) (dx + dy);
+    }
 }

@@ -39,7 +39,11 @@ public class UserPlay {
             selectedAlgorithm("Starting Automatic  Dijkstra...", Dijkstra.findShortestPath(currentState), "No solution found for this level.");
         } else if (mode.equals("UCS")) {
             selectedAlgorithm("Starting Automatic Uniform Cost Search...", UCS.findShortestPath(currentState), "No solution found for this level.");
-        } else {
+        }
+        else if (mode.equals("AS")) {
+            selectedAlgorithm("Starting Automatic A* Search...", A_Star.findShortestPath(currentState), " No solution found for this level.");
+        }
+        else {
             while (true) {
                 if (gameController.isGameWon(currentState)) {
                     System.out.println("**********CONGRATULATIONS! You won the game!************");
