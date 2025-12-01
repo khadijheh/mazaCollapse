@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
-public class State {
+public class State implements Comparable<State> {
     private final Map<Position, Cell> board;
     private final Position playerPosition;
     private final Set<Position> collectedKeys;
@@ -100,5 +100,15 @@ public class State {
     @Override
     public int hashCode() {
         return Objects.hash(board, playerPosition, collectedKeys, cellColors);
+    }
+
+    @Override
+    public int compareTo(State other) {
+
+        int costComparison = Double.compare(this.cost, other.cost);
+        if (costComparison != 0) {
+            return costComparison;
+        }
+        return Integer.compare(this.hashCode(), other.hashCode());
     }
 }

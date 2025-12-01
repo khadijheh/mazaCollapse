@@ -1,12 +1,9 @@
 package structure.controller;
 
-import logic.BFS;
-import logic.DFS;
-import logic.Dijkstra;
+import logic.*;
 import structure.levels.MazeLevels;
 import structure.models.Move;
 import structure.models.State;
-import logic.LogicME;
 
 import java.io.IOException;
 import java.util.*;
@@ -27,18 +24,21 @@ public class UserPlay {
         System.out.println("Starting Logic Maze Collapse Game.........with ITE khadijhe");
         currentState = MazeLevels.loadLevel1();
         System.out.println("Initial State:   " + currentState);
+        LogicME.printCostGrid(currentState, 10, 10);
         System.out.println("Do you want to play manually (M) or solve automatically by algorthm?");
         String mode = scanner.nextLine().toUpperCase();
         historyStack.push(currentState);
-        if (mode.equals("BFS")) {
-            selectedAlgorithm("Starting Automatic BFS...", BFS.Bfs(currentState), " No solution found for this level.");
-
-        }
-        else if (mode.equals("DFS")) {
-            selectedAlgorithm("Starting Automatic DFS ...", DFS.Dfs(currentState), " No solution found for this level.");
-        }
-        else if (mode.equals("DI")) {
+//        if (mode.equals("BFS")) {
+//            selectedAlgorithm("Starting Automatic BFS...", BFS.Bfs(currentState), " No solution found for this level.");
+//
+//        }
+//        else if (mode.equals("DFS")) {
+//            selectedAlgorithm("Starting Automatic DFS ...", DFS.Dfs(currentState), " No solution found for this level.");
+//        }
+        if (mode.equals("DI")) {
             selectedAlgorithm("Starting Automatic  Dijkstra...", Dijkstra.findShortestPath(currentState), "No solution found for this level.");
+        } else if (mode.equals("UCS")) {
+            selectedAlgorithm("Starting Automatic Uniform Cost Search...", UCS.findShortestPath(currentState), "No solution found for this level.");
         } else {
             while (true) {
                 if (gameController.isGameWon(currentState)) {
@@ -102,6 +102,7 @@ public class UserPlay {
             default -> null;
         };
     }
+
     private void printPath(State goalState) {
         System.out.println("\n--- Solution Path (Sequence of Moves) ---");
         List<State> path = LogicME.getPath(goalState);
@@ -115,10 +116,8 @@ public class UserPlay {
             System.out.println(state);
         }
 //        System.out.println("\n--- Solution Summary -----------------------------------------------");
-//        System.out.println("\n----------------");
-//        System.out.println("Total Visit of Cell: " + (path.size() - 1));
-//        System.out.println("Total Cost " + goalState.getAccumulatedCost());
+        System.out.println("\n----------------");
+        System.out.println("Total Visit of Cell: " + (path.size() - 1));
+        System.out.println("Total Cost " + goalState.getAccumulatedCost());
     }
 }
-//generatedCount >visited-->stack
-//visited-->visit
