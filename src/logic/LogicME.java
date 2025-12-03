@@ -63,10 +63,9 @@ public static Set<Move> getPossibleMoves(State state) {
     }
     private static double calculateStepCost(Color color) {
         return switch (color) {
-            case RED -> 5.0;
-            case YELLOW -> 4.0;
-            case GREEN -> 3.0;
-            case BLUE -> 2.0;
+            case RED -> 3.0;
+            case DARK -> 10.0;
+            case BLUE -> 5.0;
             default -> 1.0;
         };
     }
