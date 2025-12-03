@@ -35,13 +35,8 @@ public class UserPlay {
 //        else if (mode.equals("DFS")) {
 //            selectedAlgorithm("Starting Automatic DFS ...", DFS.Dfs(currentState), " No solution found for this level.");
 //        }
-        if (mode.equals("DI")) {
-            selectedAlgorithm("Starting Automatic  Dijkstra...", Dijkstra.findShortestPath(currentState), "No solution found for this level.");
-        } else if (mode.equals("UCS")) {
+         if (mode.equals("UCS")) {
             selectedAlgorithm("Starting Automatic Uniform Cost Search...", UCS.findShortestPath(currentState), "No solution found for this level.");
-        }
-        else if (mode.equals("AS")) {
-            selectedAlgorithm("Starting Automatic A* Search...", A_Star.findShortestPath(currentState), " No solution found for this level.");
         }
         else {
             while (true) {
@@ -83,19 +78,36 @@ public class UserPlay {
             }
         }
     }
-
-    private void selectedAlgorithm(String x, List<State> currentState, String x1) {
+    private void selectedAlgorithm(String x, logic.UCSResult result, String x1) {
         System.out.println(x);
-        List<State> path = currentState;
+        List<State> path = result.path;
         if (path != null) {
             System.out.println("-------------------------------");
             System.out.println("CONGRATULATIONS! Solution Found!");
             printPath(path.get(path.size() - 1));
+            System.out.println(" Total Expanded States: " + result.expandedStatesCount);
+            System.out.println(" Total Generated States: " + result.generatedStatesCount);
         } else {
             System.out.println("-------------------------------");
             System.out.println(x1);
         }
     }
+
+//    private void selectedAlgorithm(String x, List<State> currentState, String x1) {
+//        System.out.println(x);
+//        List<State> path = currentState;
+//        if (path != null) {
+//            System.out.println("-------------------------------");
+//            System.out.println("CONGRATULATIONS! Solution Found!");
+//            printPath(path.get(path.size() - 1));
+//            // طباعة العدادات الجديدة
+//            System.out.println("✅ Total Expanded States: " + result.expandedStatesCount);
+//            System.out.println("➕ Total Generated States: " + result.generatedStatesCount);
+//        } else {
+//            System.out.println("-------------------------------");
+//            System.out.println(x1);
+//        }
+//    }
 
     private Move parseMove(String input) {
         return switch (input) {
