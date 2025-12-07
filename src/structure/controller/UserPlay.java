@@ -38,6 +38,35 @@ public class UserPlay {
          if (mode.equals("UCS")) {
             selectedAlgorithm("Starting Automatic Uniform Cost Search...", UCS.findShortestPath(currentState), "No solution found for this level.");
         }
+         else if (mode.equals("A*")) {
+             selectedAlgorithm("Starting Automatic A-Star Search...", A_Star.findShortestPath(currentState), "No solution found for this level.");
+         }
+         else if (mode.equals("HILL") || mode.equals("H")) {
+             System.out.println("Starting Automatic Hill Climbing Search...");
+             UCSResult result = HillClimbing.findSolution(currentState);
+
+             if (result != null && result.path != null && LogicME.isGoal(result.path.get(result.path.size() - 1))) {
+                 System.out.println("-------------------------------");
+                 System.out.println("CONGRATULATIONS! Solution Found by Hill Climbing!");
+                 printPath(result.path.get(result.path.size() - 1));
+
+                 System.out.println(" Total Expanded States: " + result.expandedStatesCount);
+                 System.out.println(" Total Generated States: " + result.generatedStatesCount);
+
+             } else {
+                 System.out.println("-------------------------------");
+                 System.out.println("Hill Climbing stopped at a local optimum or maximum iterations reached.");
+
+                 if (result != null && result.path != null) {
+                     System.out.println("Final State Reached: " + result.path.get(result.path.size() - 1).getMove());
+                     System.out.println(result.path.get(result.path.size() - 1));
+
+                     System.out.println(" Total Expanded States: " + result.expandedStatesCount);
+                     System.out.println(" Total Generated States: " + result.generatedStatesCount);
+                 } else {
+                     System.out.println("No path information available.");
+                 }
+             }}
         else {
             while (true) {
                 if (gameController.isGameWon(currentState)) {
@@ -108,7 +137,6 @@ public class UserPlay {
 //            System.out.println(x1);
 //        }
 //    }
-
     private Move parseMove(String input) {
         return switch (input) {
             case "U" -> Move.UP;
@@ -118,7 +146,6 @@ public class UserPlay {
             default -> null;
         };
     }
-
     private void printPath(State goalState) {
         System.out.println("\n--- Solution Path (Sequence of Moves) ---");
         List<State> path = LogicME.getPath(goalState);
