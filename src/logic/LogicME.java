@@ -122,9 +122,31 @@ public static Set<Move> getPossibleMoves(State state) {
         }
         System.out.println("-------------------------------------------------");
     }
-    public static double calculateHeuristic(Position currentPos, Position goalPos) {
-        int dx = Math.abs(currentPos.getX() - goalPos.getX());
-        int dy = Math.abs(currentPos.getY() - goalPos.getY());
+    private static double manhattanDistance(Position p1, Position p2) {
+        int dx = Math.abs(p1.getX() - p2.getX());
+        int dy = Math.abs(p1.getY() - p2.getY());
         return (double) (dx + dy);
+    }
+    public static double calculateHeuristic(State state) {
+        Position GOAL_POSITION = new Position(1, 6);
+        Position playerPos = state.getPlayerPosition();
+        Position keyPos = null;
+        Position lockPos = null;
+
+        for (Map.Entry<Position, Cell> entry : state.getBoard().entrySet()) {
+            if (entry.getValue().getType() == Cell.CellType.KEY) {
+                keyPos = entry.getKey();
+            }
+            if (entry.getValue().getType() == Cell.CellType.LOCK) {
+                lockPos = entry.getKey();
+            }
+        }
+        if (keyPos != null && lockPos != null && state.getCollectedKeys().isEmpty()) {
+            double h_player_to_key = manhattanDistance(playerPos, keyPos);
+            double h_key_to_lock = manhattanDistance(keyPos, lockPos);
+            double h_lock_to_goal = manhattanDistance(lockPos, GOAL_POSITION);
+            return h_player_to_key + h_key_to_lock + h_lock_to_goal;
+        }
+        return manhattanDistance(playerPos, GOAL_POSITION);
     }
 }

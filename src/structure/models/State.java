@@ -106,13 +106,13 @@ public class State implements Comparable<State> {
     private static final Position GOAL_POSITION = new Position(1, 6);
     @Override
     public int compareTo(State other) {
-        double f_this = this.cost + LogicME.calculateHeuristic(this.playerPosition, GOAL_POSITION);
-        double f_other = other.cost + LogicME.calculateHeuristic(other.playerPosition, GOAL_POSITION);
+        double f_this = this.cost + LogicME.calculateHeuristic(this);
+        double f_other = other.cost + LogicME.calculateHeuristic(other);
         int fComparison = Double.compare(f_this, f_other);
         int costComparison = Double.compare(this.cost, other.cost);
         if (fComparison != 0) {
             return fComparison;
         }
-        return Integer.compare(this.hashCode(), other.hashCode());
+        return costComparison;
     }
 }
