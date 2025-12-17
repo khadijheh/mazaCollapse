@@ -103,7 +103,6 @@ public class State implements Comparable<State> {
     public int hashCode() {
         return Objects.hash(board, playerPosition, collectedKeys, cellColors);
     }
-    private static final Position GOAL_POSITION = new Position(1, 6);
     @Override
     public int compareTo(State other) {
         double f_this = this.cost + LogicME.calculateHeuristic(this);

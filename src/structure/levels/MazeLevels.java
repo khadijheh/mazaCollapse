@@ -33,7 +33,7 @@ public class MazeLevels {
     }
     public static State loadLevel1()throws IOException {
 //        String levelConfig = loadLevelFile("level2");
-        String levelConfig = loadLevelFile("hill");
+        String levelConfig = loadLevelFile("b2");
         return loadLevel(levelConfig, 10, 10);
     }
     public static State loadLevel(String coordinateString, int maxX, int maxY) throws IllegalStateException {

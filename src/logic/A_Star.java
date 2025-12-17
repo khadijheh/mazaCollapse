@@ -14,21 +14,21 @@ public class A_Star {
         frontier.add(initialState);
         visitedWithMinCost.put(initialState, initialState.getAccumulatedCost());
 
-        int nodesExpanded = 0;
+        int nodeVisited = 0;
         int generatedStates = 0;
 
         while (!frontier.isEmpty()) {
             State currentState = frontier.poll();
-            nodesExpanded++;
+            nodeVisited++;
             double h_current = LogicME.calculateHeuristic(currentState);
             double f_current = currentState.getAccumulatedCost() + h_current;
-            System.out.println("\n--- EXPANDING STATE #" + nodesExpanded + " ---");
+            System.out.println("\n--- EXPANDING STATE #" + nodeVisited + " ---");
             System.out.printf("CURRENT (g=%.1f, h=%.1f, f=%.1f) via %s\n",
                     currentState.getAccumulatedCost(), h_current, f_current, currentState.getMove() != null ? currentState.getMove().name() : "START");
 
             if (LogicME.isGoal(currentState)) {
                 List<State> path = LogicME.getPath(currentState);
-                return new UCSResult(path, nodesExpanded, generatedStates);
+                return new UCSResult(path, nodeVisited, generatedStates);
             }
 
             if (currentState.getAccumulatedCost() > visitedWithMinCost.getOrDefault(currentState, Double.MAX_VALUE)) {
@@ -43,7 +43,7 @@ public class A_Star {
             for (Move move : possibleMoves) {
                 State nextState = LogicME.applyMove(currentState, move);
                 generatedStates++;
-
+                  //f(n)=g(n)+h(n)
                 double newCost = nextState.getAccumulatedCost(); // g(n)
                 double h_neighbor = LogicME.calculateHeuristic(nextState); // h(n)
                 double f_neighbor = newCost + h_neighbor; // f(n)
@@ -62,6 +62,6 @@ public class A_Star {
             }
         }
 
-        return new UCSResult(null, nodesExpanded, generatedStates);
+        return new UCSResult(null, nodeVisited, generatedStates);
     }
 }

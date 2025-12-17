@@ -128,7 +128,7 @@ public static Set<Move> getPossibleMoves(State state) {
         return (double) (dx + dy);
     }
     public static double calculateHeuristic(State state) {
-        Position GOAL_POSITION = new Position(1, 6);
+        Position GOAL_POSITION = new Position(5, 1);
         Position playerPos = state.getPlayerPosition();
         Position keyPos = null;
         Position lockPos = null;
